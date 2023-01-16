@@ -31,7 +31,7 @@
 
         <!-- targetProject:生成PO类的位置 -->
         <javaModelGenerator targetPackage="com.jiuzhang.seckill.db.po"
-                            targetProject=".\src\main\java">
+                            targetProject="C:/Users/Jiabin/OneDrive/Documents/seckill/seckill/src/main/java">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="true"/>
             <!-- 从数据库返回的值被清理前后的空格 -->
@@ -41,7 +41,7 @@
 
         <!-- targetProject:mapper映射文件生成的位置 -->
         <sqlMapGenerator targetPackage="mappers"
-                         targetProject=".\src\main\resources">
+                         targetProject="C:/Users/Jiabin/OneDrive/Documents/seckill/seckill/src/main/resources">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
@@ -49,7 +49,7 @@
         <!-- targetPackage：mapper接口生成的位置 -->
         <javaClientGenerator type="XMLMAPPER"
                              targetPackage="com.jiuzhang.seckill.db.mappers"
-                             targetProject=".\src\main\java">
+                             targetProject="C:/Users/Jiabin/OneDrive/Documents/seckill/seckill/src/main/java">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
