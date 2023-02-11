@@ -55,9 +55,11 @@
         </javaClientGenerator>
         <table schema="" tableName="seckill_activity" domainObjectName="SeckillActivity"  enableCountByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="JDBC" />
         </table>
         <table schema="" tableName="seckill_commodity" domainObjectName="SeckillCommodity"  enableCountByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="JDBC" />
         </table>
 
 
