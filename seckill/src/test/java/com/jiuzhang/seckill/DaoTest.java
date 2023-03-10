@@ -22,8 +22,8 @@ public class DaoTest {
     @Test
     void SeckillActivityTest() {
         SeckillActivity seckillActivity = new SeckillActivity();
-        //seckillActivity.setId(1L);
-        seckillActivity.setName("测试");
+        seckillActivity.setId(1L);
+        seckillActivity.setName("测试2");
         seckillActivity.setCommodityId(999L);
         seckillActivity.setTotalStock(100L);
         seckillActivity.setSeckillPrice(new BigDecimal(99));

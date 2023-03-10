@@ -18,15 +18,15 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from order
+    from seckill_order
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from order
+    delete from seckill_order
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.jiuzhang.seckill.db.po.Order">
-    insert into order (id, order_no, order_status, 
+    insert into seckill_order (id, order_no, order_status, 
       seckill_activity_id, user_id, order_amount, 
       create_time, pay_time)
     values (#{id,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{orderStatus,jdbcType=INTEGER}, 
@@ -34,7 +34,7 @@
       #{createTime,jdbcType=DATE}, #{payTime,jdbcType=DATE})
   </insert>
   <insert id="insertSelective" parameterType="com.jiuzhang.seckill.db.po.Order">
-    insert into order
+    insert into seckill_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -89,7 +89,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.jiuzhang.seckill.db.po.Order">
-    update order
+    update seckill_order
     <set>
       <if test="orderNo != null">
         order_no = #{orderNo,jdbcType=VARCHAR},
@@ -116,7 +116,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jiuzhang.seckill.db.po.Order">
-    update order
+    update seckill_order
     set order_no = #{orderNo,jdbcType=VARCHAR},
       order_status = #{orderStatus,jdbcType=INTEGER},
       seckill_activity_id = #{seckillActivityId,jdbcType=BIGINT},

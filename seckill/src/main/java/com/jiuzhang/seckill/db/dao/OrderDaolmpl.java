@@ -14,7 +14,7 @@ public class OrderDaolmpl implements OrderDao {
 
     @Override
     public void insertOrder(Order order) {
-        orderMapper.insert(order);
+        orderMapper.insertSelective(order);
     }
 
     @Override
