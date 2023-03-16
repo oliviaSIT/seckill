@@ -79,18 +79,39 @@ public class SeckillActivityService {
          * messageDelayLevel=1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h
          */
 //        rocketMQService.sendDelayMessage("pay_check",JSON.toJSONString(order),5);
+
+        mqService.sendDelayMessage("pay_check", JSON.toJSONString(order), 5 * 60 * 1000);
         return order;
     }
 
-    public void payOrderProcess(String orderNo) {
+    public void payOrderProcess(String orderNo) throws Exception {
         log.info("完成支付订单 订单号：" + orderNo);
         Order order = orderDao.queryOrder(orderNo);
-        boolean deductStockResult = seckillActivityDao.deductStock(order.getSeckillActivityId());
-        if (deductStockResult) {
-            order.setPayTime(new Date());
-            // 订单状态 0、没有可用库存，无效订单  1、已创建等待支付  2、完成支付
-            order.setOrderStatus(2);
-            orderDao.updateOrder(order);
+
+        /*
+         * 1.判断订单是否存在
+         * 2.判断订单状态是否为未支付状态
+         */
+        if (order == null) {
+            log.error("订单号对应订单不存在：" + orderNo);
+            return;
+        } else if(order.getOrderStatus() != 1 ) {
+            log.error("订单状态无效：" + orderNo);
+            return;
         }
+
+        /*
+         * 3.订单支付完成
+         */
+        order.setPayTime(new Date());
+        //订单状态 0:没有可用库存，无效订单 1:已创建等待付款 ,2:支付完成
+        order.setOrderStatus(2);
+        orderDao.updateOrder(order);
+
+        /*
+         *4.发送订单付款成功消息
+         */
+        //rocketMQService.sendMessage("pay_done", JSON.toJSONString(order));
+        mqService.sendMessage("pay_done", JSON.toJSONString(order));
     }
 }

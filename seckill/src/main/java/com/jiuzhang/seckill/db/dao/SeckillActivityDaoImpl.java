@@ -53,4 +53,9 @@ public class SeckillActivityDaoImpl implements SeckillActivityDao {
         }
         return true;
     }
+
+    @Override
+    public void revertStock(long seckillActivityId) {
+        seckillActivityMapper.revertStock(seckillActivityId);
+    }
 }

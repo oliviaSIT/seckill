@@ -162,7 +162,12 @@ public class SeckillActivityController {
      */
     @RequestMapping("/seckill/payOrder/{orderNo}")
     public String payOrder(@PathVariable String orderNo){
-        seckillActivityService.payOrderProcess(orderNo);
+        try {
+            seckillActivityService.payOrderProcess(orderNo);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
         return "redirect:/seckill/orderQuery/" + orderNo;
     }
 
