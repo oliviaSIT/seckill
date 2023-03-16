@@ -8,6 +8,7 @@ import com.jiuzhang.seckill.db.po.Order;
 import com.jiuzhang.seckill.db.po.SeckillActivity;
 import com.jiuzhang.seckill.db.po.SeckillCommodity;
 import com.jiuzhang.seckill.services.SeckillActivityService;
+import com.jiuzhang.seckill.util.RedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,9 @@ public class SeckillActivityController {
 
     @Autowired
     private SeckillActivityService seckillActivityService;
+
+    @Autowired
+    RedisService redisService;
 
     @RequestMapping("/seckills")
     public String activityList(Map<String, Object> resultMap) {
@@ -115,6 +119,16 @@ public class SeckillActivityController {
 
         ModelAndView modelAndView = new ModelAndView();
         try {
+            /*
+             * 判断用户是否在已购名单中
+             */
+            if (redisService.isInLimitMember(seckillActivityId, userId)) {
+                //提示用户已经在限购名单中，返回结果
+                modelAndView.addObject("resultInfo", "对不起，您已经在限购名单中");
+                modelAndView.setViewName("seckill_result");
+                return modelAndView;
+            }
+
             /*
              * 确认是否能够进行秒杀
              */

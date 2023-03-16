@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.jiuzhang.seckill.db.dao.OrderDao;
 import com.jiuzhang.seckill.db.dao.SeckillActivityDao;
 import com.jiuzhang.seckill.db.po.Order;
+import com.jiuzhang.seckill.util.RedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
@@ -21,6 +22,9 @@ public class OrderConsumer  {
     @Autowired
     private SeckillActivityDao seckillActivityDao;
 
+    @Autowired
+    RedisService redisService;
+
     @Transactional
     @JmsListener(destination = "seckill_order")
     public void receiveMessage(String message) {
@@ -33,6 +37,9 @@ public class OrderConsumer  {
         if (lockStockResult) {
             //订单状态 0:没有可用库存，无效订单 1:已创建等待付款
             order.setOrderStatus(1);
+
+            // 将用户加入到限购用户中
+            redisService.addLimitMember(order.getSeckillActivityId(), order.getUserId());
         } else {
             order.setOrderStatus(0);
         }
